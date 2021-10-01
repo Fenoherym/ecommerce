@@ -1,5 +1,6 @@
 <?php
 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,16 @@ Route::get('/', function () {
 
 Route::get('/boutique', 'App\Http\Controllers\ProductController@index')->name('products.index');
 Route::get('/boutique/{slug}', 'App\Http\Controllers\ProductController@show')->name('products.show');
+
+
+/*Cart route */
+Route::get('/panier', 'App\Http\Controllers\CartController@index')->name('cart.index');
+Route::post('/panier/ajouter', 'App\Http\Controllers\CartController@store')->name('cart.store');
+Route::delete('/panier/{rowId}', 'App\Http\Controllers\CartController@destroy')->name('cart.destroy');
+Route::get('/videpanier', function(){
+    Cart::destroy();
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
